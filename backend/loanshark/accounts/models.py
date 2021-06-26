@@ -44,6 +44,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     REQUIRED_FIELDS = []
     password = models.CharField(max_length=400)
     is_staff = models.BooleanField(default=False)
+    document = models.FileField(upload_to='images/',null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
@@ -68,7 +69,7 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     
     def __str__(self):
-        return str(self.user.username)
+        return str(self.user.email)
 
     class Meta:
         verbose_name_plural = 'Profile'

@@ -9,24 +9,30 @@ from .models import *
 
 class RegisterSerializer(serializers.ModelSerializer):
     default_error_messages = {
-        'password': 'Passwords do not match '
+        'password': 'Passwords do not match ',
+        'document':'Proof of employment should be uploaded'
     }
     password = serializers.CharField(
         max_length=68, min_length=6, write_only=True)
     confirm_password = serializers.CharField(
         max_length=68, min_length=6, write_only=True)
+    document = models.FileField(upload_to='images/',null=False, blank=False)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'confirm_password']
+        fields = ['email', 'password', 'confirm_password','document']
 
     def validate(self, attrs):
         email = attrs.get('email', '')
         password = attrs.get('password', '')
         confirm_password = attrs.get('confirm_password', '')
-
+        document = attrs.get('document', '')
+        
         if password != confirm_password:
             raise serializers.ValidationError(self.default_error_messages)
+        if not document:
+            raise serializers.ValidationError(self.default_error_messages['document'])
+
         
         return attrs
 
@@ -34,7 +40,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         print('validated_data',validated_data)
         email = validated_data.get('email', '')
         password = validated_data.get('password', '')
-        return User.objects.create_user(email=email,password=password)
+        document = validated_data.get('document', '')
+
+        return User.objects.create_user(email=email,password=password,document=document)
 
 
 class LoginSerializer(serializers.ModelSerializer):
