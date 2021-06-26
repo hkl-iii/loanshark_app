@@ -67,14 +67,14 @@ AUTH_USER_MODEL = 'accounts.User'
 """
 SETTING FOR CORS HEADER
 """
-# CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = (
-#     'localhost:3000',  '127.0.0.1:3000','127.0.0.1:8000','localhost:8000'
-# )
-# CORS_ORIGIN_REGEX_WHITELIST = (
-#     'localhost:3000',  '127.0.0.1:3000','127.0.0.1:8000','localhost:8000'
-# )
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',  '127.0.0.1:3000','127.0.0.1:8000','localhost:8000'
+)
+CORS_ORIGIN_REGEX_WHITELIST = (
+    'localhost:3000',  '127.0.0.1:3000','127.0.0.1:8000','localhost:8000'
+)
 
 
 
@@ -84,6 +84,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',),
 
 }
 

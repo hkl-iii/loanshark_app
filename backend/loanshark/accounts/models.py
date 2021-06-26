@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin, BaseUserManager,AbstractBaseUser
 from django.db.models.signals import post_save,pre_save
 from django.dispatch import receiver
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_jwt.settings import api_settings
 
 # Create your models here.
 
@@ -54,12 +54,13 @@ class User(AbstractBaseUser,PermissionsMixin):
     def __str__(self):
         return self.email
 
-    def tokens(self):
-        refresh = RefreshToken.for_user(self)
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
-        }
+    def get_jwt_token_for_user(self):
+        """ get jwt token for the user """
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        payload = jwt_payload_handler(self)
+        token = jwt_encode_handler(payload)
+        return token
 
 
 class Profile(models.Model):

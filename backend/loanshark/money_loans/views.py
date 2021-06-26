@@ -14,25 +14,20 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 
 class LoansAPIView(generics.GenericAPIView):
     serializer_class = LoansSerializer
-    permission_classes = (permissions.AllowAny,)
-    
+    permission_classes = (permissions.IsAuthenticated,)
     default_error_messages = {
-        'amount': 'Amount should be > 100$ and < 1000$ ',
+        'amount': 'Amount should be > 100 $ and < 1000 $ ',
         
     }
     def post(self, request,*args,**kwargs):
         request_data = request.data
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         amount = request_data.get('amount', '')
         user = request_data.get('user', '')
-        
-        
+                
         if not int(amount) > 100 and  int(amount) < 1000:
             raise serializers.ValidationError(self.default_error_messages['amount'])
-
-
         else:
             serializer.save()  
             return Response({

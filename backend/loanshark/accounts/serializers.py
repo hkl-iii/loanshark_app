@@ -53,10 +53,9 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def get_tokens(self, obj):
         user = User.objects.get(email=obj['email'])
-
         return {
-            'refresh': user.tokens()['refresh'],
-            'access': user.tokens()['access']
+            'token': user.get_jwt_token_for_user()
+            
         }
 
     class Meta:
@@ -79,7 +78,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
         return {
             'email': user.email,
-           'tokens': user.tokens
+           'tokens': user.get_jwt_token_for_user()
         }
 
         return super().validate(attrs)
