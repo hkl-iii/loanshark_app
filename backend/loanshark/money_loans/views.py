@@ -17,6 +17,7 @@ class LoansAPIView(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     default_error_messages = {
         'amount': 'Amount should be > 100 $ and < 1000 $ ',
+        'user_exists':'You need to pay back the total amount before applying again !'
         
     }
     def post(self, request,*args,**kwargs):
@@ -24,14 +25,23 @@ class LoansAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         amount = request_data.get('amount', '')
-        user = request_data.get('user', '')
-                
-        if not int(amount) > 100 and  int(amount) < 1000:
-            raise serializers.ValidationError(self.default_error_messages['amount'])
-        else:
-            serializer.save()  
-            return Response({
-                "msg": "Success",
-                
-            },status=status.HTTP_201_CREATED)
+        user_id = request_data.get('user', '')
+        user = get_object_or_404(User,id=user_id)
+
+        if Loans.objects.filter(user=user,is_done=False).exists():
+            raise serializers.ValidationError(self.default_error_messages['user_exists'])
+        else:   
+            if not int(amount) > 100 and  int(amount) < 1000:
+                raise serializers.ValidationError(self.default_error_messages['amount'])
+            else:
+                loan = serializer.save()
+                price = loan.calculate_total_amount()
+                loan.total_amount_to_pay = price + int(amount)
+                loan.remaining_amount_to_pay = price + int(amount)
+
+                loan.save()
+                return Response({
+                    "msg": "Success",
+                    
+                },status=status.HTTP_201_CREATED)
 
