@@ -7,13 +7,40 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib import auth
 from .models import *
 
+class RegisterSerializer(serializers.ModelSerializer):
+    default_error_messages = {
+        'password': 'Passwords do not match '
+    }
+    password = serializers.CharField(
+        max_length=68, min_length=6, write_only=True)
+    confirm_password = serializers.CharField(
+        max_length=68, min_length=6, write_only=True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'password', 'confirm_password']
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        password = attrs.get('password', '')
+        confirm_password = attrs.get('confirm_password', '')
+
+        if password != confirm_password:
+            raise serializers.ValidationError(self.default_error_messages)
+        
+        return attrs
+
+    def create(self, validated_data):
+        print('validated_data',validated_data)
+        email = validated_data.get('email', '')
+        password = validated_data.get('password', '')
+        return User.objects.create_user(email=email,password=password)
 
 
 class LoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255, min_length=3)
     password = serializers.CharField(
         max_length=68, min_length=6, write_only=True)
-
 
     tokens = serializers.SerializerMethodField()
 
