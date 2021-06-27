@@ -44,7 +44,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     REQUIRED_FIELDS = []
     password = models.CharField(max_length=400)
     is_staff = models.BooleanField(default=False)
-    document = models.FileField(upload_to='images/',null=True, blank=True)
+    proof = models.FileField(upload_to='images/',null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 

@@ -18,8 +18,17 @@ class RegisterView(generics.GenericAPIView):
         user = request.data
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
+
+        if 'proof' in serializer.validated_data:
+            proof = serializer.validated_data.pop('proof')
+            print('views_proof',proof)
+            user = serializer.save()
+            user.proof = proof
+            user.save()
         serializer.save()
+        
         user_data = serializer.data
+
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
@@ -32,6 +41,7 @@ class LoginAPIView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
+        
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

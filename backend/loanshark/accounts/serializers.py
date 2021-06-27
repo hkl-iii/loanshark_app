@@ -16,22 +16,23 @@ class RegisterSerializer(serializers.ModelSerializer):
         max_length=68, min_length=6, write_only=True)
     confirm_password = serializers.CharField(
         max_length=68, min_length=6, write_only=True)
-    document = models.FileField(upload_to='images/',null=False, blank=False)
+    proof = models.FileField(upload_to='images/',null=False, blank=False)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'confirm_password','document']
+        fields = ['email', 'password', 'confirm_password','proof']
 
     def validate(self, attrs):
         email = attrs.get('email', '')
         password = attrs.get('password', '')
         confirm_password = attrs.get('confirm_password', '')
-        document = attrs.get('document', '')
+        proof = attrs.get('proof', '')
+
         
         if password != confirm_password:
             raise serializers.ValidationError(self.default_error_messages)
-        if not document:
-            raise serializers.ValidationError(self.default_error_messages['document'])
+        # if not proof:
+        #     raise serializers.ValidationError(self.default_error_messages['document'])
 
         
         return attrs
@@ -39,9 +40,9 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         email = validated_data.get('email', '')
         password = validated_data.get('password', '')
-        document = validated_data.get('document', '')
+        proof = validated_data.get('proof', '')
 
-        return User.objects.create_user(email=email,password=password,document=document)
+        return User.objects.create_user(email=email,password=password,proof=proof)
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -80,7 +81,7 @@ class LoginSerializer(serializers.ModelSerializer):
             'email': user.email,
            'tokens': user.get_jwt_token_for_user()
         }
-
+        
         return super().validate(attrs)
 
 

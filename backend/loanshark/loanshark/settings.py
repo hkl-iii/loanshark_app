@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-sk%g4gr_9!=bx$=thdw+k55e774gk7t72+ms9hrz-5suvuo%8u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','localhost:3000']
 
 
 # Application definition
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    #'corsheaders',
+    'corsheaders',
     'accounts',
     'money_loans'
 ]
@@ -59,22 +59,31 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
 
 
+
 """
 SETTING FOR CORS HEADER
 """
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',  '127.0.0.1:3000','127.0.0.1:8000','localhost:8000'
-)
-CORS_ORIGIN_REGEX_WHITELIST = (
-    'localhost:3000',  '127.0.0.1:3000','127.0.0.1:8000','localhost:8000'
-)
+if DEBUG:
+    CORS_ORIGIN_ALLOW_ALL = True
+    CORS_ALLOW_CREDENTIALS = True
+
+if not DEBUG:
+    CORS_ORIGIN_WHITELIST = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+
+    ]
+    CORS_ORIGIN_REGEX_WHITELIST =[
+    'localhost:3000',  '127.0.0.1:3000',
+    ]   
+
 
 
 
@@ -85,7 +94,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',),
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework.parsers.JSONParser',
+    # ),
+    'DEFAULT_PARSER_CLASSES': (
+    'rest_framework.parsers.JSONParser',
+    'rest_framework.parsers.FormParser',
+    'rest_framework.parsers.MultiPartParser',
+),
 
 }
 
