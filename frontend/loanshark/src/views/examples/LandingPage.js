@@ -71,14 +71,12 @@ export default function LandingPage() {
             <Row className="row-grid justify-content-between align-items-center text-left">
               <Col lg="6" md="6">
                 <h1 className="text-white">
-                  We keep your coin <br />
-                  <span className="text-white">secured</span>
+                LoanShark <br />
+                  <span className="text-white"></span>
                 </h1>
-                <p className="text-white mb-3">
-                  A wonderful serenity has taken possession of my entire soul,
-                  like these sweet mornings of spring which I enjoy with my
-                  whole heart. I am alone, and feel...
-                </p>
+                <h4 className="text-white mb-3">
+                Loanshark lends emergency funds of up to $1,000 to account holders upon request.
+                </h4>
                 <div className="btn-wrapper mb-3">
                   <p className="category text-success d-inline">
                     <a href="/login-page">Start Now</a>
@@ -217,14 +215,7 @@ export default function LandingPage() {
                       impenetrable foliage of my trees, and but a few stray.
                     </p>
                     <br />
-                    <a
-                      className="font-weight-bold text-info mt-5"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      Show all{" "}
-                      <i className="tim-icons icon-minimal-right text-info" />
-                    </a>
+
                   </div>
                 </Col>
               </Row>
@@ -257,12 +248,10 @@ export default function LandingPage() {
                       <div className="icon icon-primary">
                         <i className="tim-icons icon-money-coins" />
                       </div>
-                      <h4 className="info-title">Low Commission</h4>
+                      <h4 className="info-title">AUTOMATIC APPROVAL </h4>
                       <hr className="line-primary" />
                       <p>
-                        Divide details about your work into parts. Write a few
-                        lines about each one. A paragraph describing a feature
-                        will.
+                      No credit checks. The only qualification needed is verification of employment. 
                       </p>
                     </div>
                   </Col>
@@ -271,12 +260,10 @@ export default function LandingPage() {
                       <div className="icon icon-warning">
                         <i className="tim-icons icon-chart-pie-36" />
                       </div>
-                      <h4 className="info-title">High Incomes</h4>
+                      <h4 className="info-title">UNLIMITED LOAN REQUESTS</h4>
                       <hr className="line-warning" />
                       <p>
-                        Divide details about your product or agency work into
-                        parts. Write a few lines about each one. A paragraph
-                        describing feature will be a feature.
+                      You can apply to as many loans as you would like as long as previous loan has been paid in full.
                       </p>
                     </div>
                   </Col>
@@ -285,12 +272,10 @@ export default function LandingPage() {
                       <div className="icon icon-success">
                         <i className="tim-icons icon-single-02" />
                       </div>
-                      <h4 className="info-title">Verified People</h4>
+                      <h4 className="info-title">IMMEDIATE DEPOSIT </h4>
                       <hr className="line-success" />
                       <p>
-                        Divide details about your product or agency work into
-                        parts. Write a few lines about each one. A paragraph
-                        describing be enough.
+                      Once loan amount has been requested, funds will be deposited within 24 hours of the request! Get your loan ASAP.
                       </p>
                     </div>
                   </Col>
