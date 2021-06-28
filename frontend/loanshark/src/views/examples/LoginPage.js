@@ -157,7 +157,7 @@ export default function LoginPage () {
                           <Input
                             placeholder="Password"
                             id="password"
-                            type="text"
+                            type="password"
                             onFocus={(e) => setPasswordFocus(true)}
                             onBlur={(e) => setPasswordFocus(false)}
                           />
