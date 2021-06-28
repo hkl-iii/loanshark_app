@@ -139,15 +139,48 @@ let full_name;
             src={require("assets/img/path4.png").default}
           />
           <Container className="align-items-center">
+          
             <Row>
+            
               <Col lg="6" md="6">
-                <p className="text-on-back">Loanshark</p>
-                <p className="profile-description">
-                  Offices parties lasting outward nothing age few resolve.
-                  Impression to discretion understood to we interested he
-                  excellence. Him remarkably use projection collecting. Going
-                  about eat forty world has round miles.
-                </p>
+              
+                <Card className="card-plain">
+               
+                  <CardHeader>
+                  <h1 className=" text-left" style={{color:'#e14eca'}}>Request a loan</h1>
+                  </CardHeader>
+                  <CardBody>
+                    <Form>
+
+
+                      <Row>
+                        <Col md="12">
+                          <FormGroup>
+                            <label style={{color:'white'}}><strong>Min Amount to request : 100$<br></br>Max Amount to request:1000$</strong></label>
+                            <Input placeholder="Loand amount" type="number" className="mt-3" />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Button
+                        className="btn-round float-right"
+                        color="primary"
+                        data-placement="right"
+                        id="tooltip341148792"
+                        type="button"
+                      >
+                        Send Request
+                      </Button>
+                      <UncontrolledTooltip
+                        delay={0}
+                        placement="right"
+                        target="tooltip341148792"
+                      >
+                        Can't wait for your message
+                      </UncontrolledTooltip>
+                    </Form>
+                  </CardBody>
+                </Card>
+
 
 
               </Col>
@@ -275,7 +308,9 @@ let full_name;
             </Row>
           </Container>
         </div>
+        <section className="section">
 
+        </section>
 
         <Footer />
       </div>
