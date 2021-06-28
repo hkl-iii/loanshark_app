@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import  IsAuthenticated, IsAuthenticatedOrReadOnly
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
+from money_loans.models import *
+from django.core import serializers
 # Create your views here.
 class RegisterView(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -64,3 +65,36 @@ class LogoutAPIView(generics.GenericAPIView):
 #     queryset = Profile.objects.all()
 #     serializer_class = ProfileSerializer
 #     #permission_classes = [IsAuthenticatedOrReadOnly]
+
+class ProfileViewSet(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get(self, request,**kwargs):
+        email = self.request.query_params.get('email', None)        
+        if User.objects.filter(email=email).exists():
+            user = get_object_or_404(User, email=email)
+        if Profile.objects.filter(user=user).exists():
+            profile = get_object_or_404(Profile, user=user)
+            full_name = profile.full_name
+            phone_number = profile.phone_number
+            profile_picture = profile.profile_picture
+            address = profile.address
+        
+        if Loans.objects.all().filter(user=user).exists():
+            loans_list = Loans.objects.all().filter(user=user)
+
+        loans_data= serializers.serialize("json", loans_list)
+        return Response(
+            {
+                'email': email,
+                'full_name':full_name,
+                'phone_number':phone_number,
+                #'profile_picture':profile_picture,
+                'address':address,
+                'loans_list':loans_data
+                
+
+            },
+            status=status.HTTP_200_OK)

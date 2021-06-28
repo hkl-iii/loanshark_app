@@ -81,7 +81,7 @@ export default function LoginPage () {
         toast.success("welcome back");
 
 
-        //this.props.history.push('/home')
+        //this.props.history.push('/landing-page')
 
 
       })
