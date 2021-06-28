@@ -177,7 +177,7 @@ let full_name;
                           }}
                           href="#pablo"
                         >
-                          Wallet
+                          Info
                         </NavLink>
                       </NavItem>
 
@@ -192,7 +192,7 @@ let full_name;
                           }}
                           href="#pablo"
                         >
-                          Loans List
+                          Wallet List
                         </NavLink>
                       </NavItem>
                     </Nav>
