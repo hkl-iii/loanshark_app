@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
-from rest_framework.permissions import  IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import  IsAuthenticated, IsAuthenticatedOrReadOnly,AllowAny
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
@@ -14,7 +14,10 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 
 class LoansAPIView(generics.GenericAPIView):
     serializer_class = LoansSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (
+        permissions.AllowAny,
+    )
+
     default_error_messages = {
         'amount': 'Amount should be > 100 $ and < 1000 $ ',
         'user_exists':'You need to pay back the total amount before applying again !'

@@ -42,7 +42,9 @@ class LoginAPIView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
+        print('serializer.data',serializer.data)
+        user = serializer.validated_data
+        # print('user',user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -68,11 +70,12 @@ class LogoutAPIView(generics.GenericAPIView):
 
 class ProfileViewSet(generics.GenericAPIView):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticatedOrReadOnly
     ]
 
     def get(self, request,**kwargs):
-        email = self.request.query_params.get('email', None)        
+        email = self.request.query_params.get('email', None)   
+        print('email',email)     
         if User.objects.filter(email=email).exists():
             user = get_object_or_404(User, email=email)
         if Profile.objects.filter(user=user).exists():

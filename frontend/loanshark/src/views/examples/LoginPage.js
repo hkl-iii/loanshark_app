@@ -1,7 +1,6 @@
 import React  from "react";
 import classnames from "classnames";
 import Axios from "axios";
-import { Redirect } from 'react-router';
 import {  toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // reactstrap components
@@ -78,8 +77,12 @@ export default function LoginPage () {
         let return_data = response.data;
         localStorage.setItem("email", return_data.email)
         localStorage.setItem("token", return_data.tokens.token)
+        localStorage.setItem("id", return_data.tokens.id)
         toast.success("welcome back");
-
+        console.log('email',email)
+        console.log('id',localStorage.getItem('id'))
+        console.log('token',localStorage.getItem('token'))
+        console.log('return_data',return_data)
 
         //this.props.history.push('/landing-page')
 
@@ -158,6 +161,7 @@ export default function LoginPage () {
                             placeholder="Password"
                             id="password"
                             type="password"
+                            name="password"
                             onFocus={(e) => setPasswordFocus(true)}
                             onBlur={(e) => setPasswordFocus(false)}
                           />

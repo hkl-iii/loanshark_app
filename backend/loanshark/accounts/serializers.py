@@ -6,6 +6,7 @@ from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnico
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib import auth
 from .models import *
+from django.shortcuts import get_object_or_404
 
 class RegisterSerializer(serializers.ModelSerializer):
     default_error_messages = {
@@ -54,8 +55,10 @@ class LoginSerializer(serializers.ModelSerializer):
 
     def get_tokens(self, obj):
         user = User.objects.get(email=obj['email'])
+        user_id = user.id
         return {
-            'token': user.get_jwt_token_for_user()
+            'token': user.get_jwt_token_for_user(),
+            'id':user_id
             
         }
 
@@ -66,9 +69,9 @@ class LoginSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         email = attrs.get('email', '')
         password = attrs.get('password', '')
-        filtered_user_by_email = User.objects.filter(email=email)
+        filtered_user_by_email = get_object_or_404(User,email=email)
         user = auth.authenticate(email=email, password=password)
-
+        print('filtered_user_by_email',filtered_user_by_email.id)
         if not user:
             raise AuthenticationFailed('Invalid credentials, try again')
         if not user.is_active:
@@ -79,7 +82,8 @@ class LoginSerializer(serializers.ModelSerializer):
 
         return {
             'email': user.email,
-           'tokens': user.get_jwt_token_for_user()
+           'tokens': user.get_jwt_token_for_user(),
+           
         }
         
         return super().validate(attrs)

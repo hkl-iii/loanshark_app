@@ -3,6 +3,8 @@ import classnames from "classnames";
 import Axios from "axios";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
+import {  toast,ToastContainer } from "react-toastify";
+
 // reactstrap components
 import {
   Button,
@@ -76,6 +78,38 @@ let full_name;
     };
   },[]);
 
+  function onSubmit  ()  {
+    let id = localStorage.getItem('id')
+    let email = localStorage.getItem("email");
+    let amount = document.getElementById("amount").value
+      let token = localStorage.getItem("token");
+        
+        Axios.post(
+          "http://localhost:8000/api/request-loans/",
+          {
+            user:id,
+            amount:amount
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "token" +token,
+            },
+          }
+        )
+          .then((response) => {
+            let message = response.data.msg;
+            console.log(message)
+            if (message) {
+              toast.success("Loan request is saved");
+  
+            } 
+          })
+          .catch((err) => {
+            toast.error("You need to pay back the total amount before applying again ! ");
+          });
+      }
+
 
 
   function load_user_data ()  {
@@ -124,7 +158,8 @@ let full_name;
   
 
   return (
-    <>
+<div>
+      <ToastContainer />
       <ExamplesNavbar />
       <div className="wrapper">
         <div className="page-header">
@@ -151,13 +186,11 @@ let full_name;
                   </CardHeader>
                   <CardBody>
                     <Form>
-
-
                       <Row>
                         <Col md="12">
                           <FormGroup>
                             <label style={{color:'white'}}><strong>Min Amount to request : 100$<br></br>Max Amount to request:1000$</strong></label>
-                            <Input placeholder="Loand amount" type="number" className="mt-3" />
+                            <Input placeholder="Loand amount" type="number"  name="amount"id="amount"className="mt-3" />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -167,21 +200,14 @@ let full_name;
                         data-placement="right"
                         id="tooltip341148792"
                         type="button"
+                        onClick={() => onSubmit()}
                       >
                         Send Request
                       </Button>
-                      <UncontrolledTooltip
-                        delay={0}
-                        placement="right"
-                        target="tooltip341148792"
-                      >
-                        Can't wait for your message
-                      </UncontrolledTooltip>
+
                     </Form>
                   </CardBody>
                 </Card>
-
-
 
               </Col>
               <Col className="ml-auto mr-auto" lg="4" md="6">
@@ -314,6 +340,6 @@ let full_name;
 
         <Footer />
       </div>
-    </>
+    </div>  
   );
 }
