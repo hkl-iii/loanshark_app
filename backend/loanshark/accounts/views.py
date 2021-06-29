@@ -17,20 +17,30 @@ class RegisterView(generics.GenericAPIView):
     )
     def post(self, request):
         user = request.data
-        serializer = self.serializer_class(data=user)
-        serializer.is_valid(raise_exception=True)
+        # serializer = self.serializer_class(data=user)
+        # serializer.is_valid(raise_exception=True)
+        email = user.get('email', '')
+        password = user.get('password', '')
+        proof = user.get('proof', '')
+        full_name = user.get('full_name', '')
+        phone_number = user.get('phone_number', '')
+        User.objects.create_user(email=email,password=password,proof=proof,full_name=full_name,phone_number=phone_number)
 
-        if 'proof' in serializer.validated_data:
-            proof = serializer.validated_data.pop('proof')
-            print('views_proof',proof)
-            user = serializer.save()
-            user.proof = proof
-            user.save()
-        serializer.save()
+        # if 'proof' in serializer.validated_data:
+        #     proof = serializer.validated_data.pop('proof')
+        #     email = user.get('email', '')
+        #     password = user.get('password', '')
+        #     proof = user.get('proof', '')
+            
+        #     print('views_proof',proof)
+        #     user = serializer.save()
+        #     user.proof = proof
+        #     user.save()
+        # serializer.save()
         
-        user_data = serializer.data
+        # user_data = serializer.data
 
-        return Response(user_data, status=status.HTTP_201_CREATED)
+        return Response( status=status.HTTP_201_CREATED)
 
 
 class LoginAPIView(generics.GenericAPIView):
@@ -38,7 +48,6 @@ class LoginAPIView(generics.GenericAPIView):
     permission_classes = (
         permissions.AllowAny,
     )
-
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -50,54 +59,10 @@ class LoginAPIView(generics.GenericAPIView):
 
 class LogoutAPIView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
-
     permission_classes = (permissions.IsAuthenticated,)
-
     def post(self, request):
-
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-
-# class ProfileViewSet(viewsets.ModelViewSet):
-#     queryset = Profile.objects.all()
-#     serializer_class = ProfileSerializer
-#     #permission_classes = [IsAuthenticatedOrReadOnly]
-
-class ProfileViewSet(generics.GenericAPIView):
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly
-    ]
-
-    def get(self, request,**kwargs):
-        email = self.request.query_params.get('email', None)   
-        print('email',email)     
-        if User.objects.filter(email=email).exists():
-            user = get_object_or_404(User, email=email)
-        if Profile.objects.filter(user=user).exists():
-            profile = get_object_or_404(Profile, user=user)
-            full_name = profile.full_name
-            phone_number = profile.phone_number
-            profile_picture = profile.profile_picture
-            address = profile.address
-        
-        if Loans.objects.all().filter(user=user).exists():
-            loans_list = Loans.objects.all().filter(user=user)
-
-        loans_data= serializers.serialize("json", loans_list)
-        return Response(
-            {
-                'email': email,
-                'full_name':full_name,
-                'phone_number':phone_number,
-                #'profile_picture':profile_picture,
-                'address':address,
-                'loans_list':loans_data
-                
-
-            },
-            status=status.HTTP_200_OK)

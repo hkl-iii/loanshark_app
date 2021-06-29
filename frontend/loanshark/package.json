@@ -1,18 +1,18 @@
 {
-  "name": "blk-design-system-react",
+  "name": "frontend",
   "version": "1.2.0",
-  "description": "React version of BLK Design System by Creative Tim",
+  "description": "loanshark_app",
   "main": "index.js",
   "author": "Creative Tim",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/blk-design-system-react.git"
+    "url": "git+https://github.com/hkl-iii/loanshark_app.gitt"
   },
   "bugs": {
-    "url": "https://github.com/creativetimofficial/blk-design-system-react/issues"
+    "url": "https://github.com/hkl-iii/loanshark_app.git"
   },
-  "homepage": "https://demos.creative-tim.com/blk-design-system-react/#/",
+  "homepage": "#",
   "keywords": [
     "react",
     "reactjs",

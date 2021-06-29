@@ -112,48 +112,9 @@ let full_name;
 
 
 
-  function load_user_data ()  {
-    let token = localStorage.getItem("token");
-    let email = localStorage.getItem('email')
-
-
-    Axios.get("http://localhost:8000/auth/profile/",{ params: { email: email } },{
-
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "token " +token,
-      },
-    })
-    .then((response) => {
-      let response_data = response.data;
-
-      
-      let email = response_data.email;
-      let full_name = response_data.full_name;
-      let phone_number = response_data.phone_number;
-      let loans_list = response_data.loans_list;
-      localStorage.setItem('full_name',full_name)
-      localStorage.setItem('phone_number',phone_number)
-
-      console.log('email',email)
-      console.log('full_name',full_name)
-      console.log('phone_number',phone_number)
-
-      let myObject = JSON.parse(loans_list);
-      console.log('myObject',myObject)
-
-
-
-
-
-
-    }
-    );
-  };
 
   useEffect(() =>{
-    load_user_data()
-   
+
   });
   
 

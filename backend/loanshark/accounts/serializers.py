@@ -21,7 +21,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'confirm_password','proof']
+        fields = ['email', 'password', 'confirm_password','proof','full_name','phone_number']
 
     def validate(self, attrs):
         email = attrs.get('email', '')
@@ -34,16 +34,14 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(self.default_error_messages)
         # if not proof:
         #     raise serializers.ValidationError(self.default_error_messages['document'])
-
-        
         return attrs
 
-    def create(self, validated_data):
-        email = validated_data.get('email', '')
-        password = validated_data.get('password', '')
-        proof = validated_data.get('proof', '')
-
-        return User.objects.create_user(email=email,password=password,proof=proof)
+    # def create(self, validated_data):
+    #     email = validated_data.get('email', '')
+    #     password = validated_data.get('password', '')
+    #     proof = validated_data.get('proof', '')
+        
+    #     return User.objects.create_user(email=email,password=password,proof=proof)
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -56,9 +54,16 @@ class LoginSerializer(serializers.ModelSerializer):
     def get_tokens(self, obj):
         user = User.objects.get(email=obj['email'])
         user_id = user.id
+        full_name = user.full_name
+        phone_number = user.phone_number
+        address = user.address
+
         return {
             'token': user.get_jwt_token_for_user(),
-            'id':user_id
+            'id':user_id,
+            'full_name':full_name,
+            'phone_number':phone_number,
+            'address':address
             
         }
 
@@ -82,7 +87,6 @@ class LoginSerializer(serializers.ModelSerializer):
 
         return {
             'email': user.email,
-           'tokens': user.get_jwt_token_for_user(),
            
         }
         
@@ -108,8 +112,3 @@ class LogoutSerializer(serializers.Serializer):
         except TokenError:
             self.fail('bad_token')
 
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = '__all__'

@@ -1,6 +1,5 @@
-import React from "react";
+import React,{ Component } from "react";
 import Axios from "axios";
-import { Redirect } from 'react-router';
 import {  toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import classnames from "classnames";
@@ -31,43 +30,15 @@ import {
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import Footer from "components/Footer/Footer.js";
 
-export default function RegisterPage() {
-  const [squares1to6, setSquares1to6] = React.useState("");
-  const [squares7and8, setSquares7and8] = React.useState("");
-
-  React.useEffect(() => {
-    document.body.classList.toggle("register-page");
-    document.documentElement.addEventListener("mousemove", followCursor);
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      document.body.classList.toggle("register-page");
-      document.documentElement.removeEventListener("mousemove", followCursor);
-    };
-  },[]);
-  const followCursor = (event) => {
-    let posX = event.clientX - window.innerWidth / 2;
-    let posY = event.clientY - window.innerWidth / 6;
-    setSquares1to6(
-      "perspective(500px) rotateY(" +
-        posX * 0.05 +
-        "deg) rotateX(" +
-        posY * -0.05 +
-        "deg)"
-    );
-    setSquares7and8(
-      "perspective(500px) rotateY(" +
-        posX * 0.02 +
-        "deg) rotateX(" +
-        posY * -0.02 +
-        "deg)"
-    );
-  };
+class RegisterPage extends Component {
 
 
-  async function onSubmit () {
+   onSubmit  = () => {
     let email = document.getElementById("email").value
     let password = document.getElementById("password").value
     let confirm_password = document.getElementById("confirm_password").value
+    let full_name = document.getElementById("full_name").value
+    let phone_number = document.getElementById("phone_number").value
     let proof = document.getElementById("proof").files[0]
 
 
@@ -75,6 +46,8 @@ export default function RegisterPage() {
     data.append('proof', proof, proof.name);
     data.append('email', email);
     data.append('password', password);
+    data.append('full_name', full_name);
+    data.append('phone_number', phone_number);
     data.append('confirm_password', confirm_password);
 
     Axios.post("http://localhost:8000/auth/register/", data,{
@@ -86,16 +59,14 @@ export default function RegisterPage() {
       },
 
   })
-    .then((response) => {
-      console.log('response',response)
-      setTimeout(function () {
-        toast.success("Thank you ! your account will be approved as soon as possible by the Admin");
-      }, 1000);
 
-      return <Redirect to="/login-page" />
-      
-      
-    })
+  .then((response) => {
+    setTimeout(function () {
+      toast.success("Your Account Has Been Created Successfully! it will be approved by the Admin as soon as possible");
+    }, 100);
+    this.props.history.push("/login-page");
+  })
+
     .catch((error) => {
       console.log('error',error)
       toast.error("Something went wrong, please try again");
@@ -103,7 +74,8 @@ export default function RegisterPage() {
 
 };
 
-  return (
+  render (){
+    return(
 <div >
 <ExamplesNavbar />
       <ToastContainer />
@@ -118,12 +90,12 @@ export default function RegisterPage() {
                   <div
                     className="square square-7"
                     id="square7"
-                    style={{ transform: squares7and8 }}
+                    
                   />
                   <div
                     className="square square-8"
                     id="square8"
-                    style={{ transform: squares7and8 }}
+                    
                   />
                   <Card className="card-register">
                     <CardHeader>
@@ -192,6 +164,61 @@ export default function RegisterPage() {
                         </InputGroup>
                         
 
+
+
+
+
+
+
+
+
+
+
+
+                        <InputGroup
+                          className={classnames({
+                          })}
+                          >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-lock-circle" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Full name"
+                            type="text"
+                            id="full_name"
+                            name="full_name"
+
+                          />
+                        </InputGroup>
+                        <InputGroup
+                          className={classnames({
+                          })}
+                          >
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="tim-icons icon-lock-circle" />
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            placeholder="Phone N°"
+                            type="text"
+                            id="phone_number"
+                            name="phone_number"
+
+                          />
+                        </InputGroup>
+
+
+
+
+
+
+
+
+
+
                         <InputGroup
                           className={classnames({
                           })}
@@ -218,7 +245,7 @@ export default function RegisterPage() {
                       </Form>
                     </CardBody>
                     <CardFooter>
-                      <Button className="btn-round" color="primary" size="lg"onClick={() => onSubmit()}>
+                      <Button className="btn-round" color="primary" size="lg"onClick={() => this.onSubmit()}>
                         Get Started
                       </Button>
                     </CardFooter>
@@ -229,32 +256,32 @@ export default function RegisterPage() {
               <div
                 className="square square-1"
                 id="square1"
-                style={{ transform: squares1to6 }}
+                
               />
               <div
                 className="square square-2"
                 id="square2"
-                style={{ transform: squares1to6 }}
+                
               />
               <div
                 className="square square-3"
                 id="square3"
-                style={{ transform: squares1to6 }}
+                
               />
               <div
                 className="square square-4"
                 id="square4"
-                style={{ transform: squares1to6 }}
+                
               />
               <div
                 className="square square-5"
                 id="square5"
-                style={{ transform: squares1to6 }}
+                
               />
               <div
                 className="square square-6"
                 id="square6"
-                style={{ transform: squares1to6 }}
+                
               />
             </Container>
           </div>
@@ -262,5 +289,8 @@ export default function RegisterPage() {
         <Footer />
       </div>
       </div>
-  );
+    );
+  }
 }
+
+export default RegisterPage; 

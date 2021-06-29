@@ -43,6 +43,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     password = models.CharField(max_length=400)
+    full_name = models.CharField(max_length=100, blank=True, null=True)
+    phone_number = models.CharField(max_length=30, blank=True, null=True)
+    address = models.CharField(max_length=250, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     proof = models.FileField(upload_to='images/',null=True, blank=True)
     is_verified = models.BooleanField(default=False)
@@ -63,22 +66,3 @@ class User(AbstractBaseUser,PermissionsMixin):
         return token
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=100, blank=True, null=True)
-    phone_number = models.CharField(max_length=30, blank=True, null=True)
-    profile_picture = models.ImageField(null=True, blank=True,upload_to='images/')
-    address = models.CharField(max_length=250, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    
-    def __str__(self):
-        return str(self.user.email)
-
-    class Meta:
-        verbose_name_plural = 'Profile'
-
-def create_profile(sender, **kwargs):
-    if kwargs['created']:
-        user_profile = Profile.objects.create(user=kwargs['instance'],
-        )
-post_save.connect(create_profile, sender=User)
