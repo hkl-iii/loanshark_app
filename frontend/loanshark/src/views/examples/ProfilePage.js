@@ -4,6 +4,8 @@ import Axios from "axios";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import {  toast,ToastContainer } from "react-toastify";
+import {Link} from 'react-router-dom';
+
 
 // reactstrap components
 import {
@@ -194,24 +196,12 @@ let full_name;
                           }}
                           href="#pablo"
                         >
-                          Info
+                          Information
                         </NavLink>
                       </NavItem>
 
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: tabs === 3,
-                          })}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTabs(3);
-                          }}
-                          href="#pablo"
-                        >
-                          Wallet List
-                        </NavLink>
-                      </NavItem>
+                      
+
                     </Nav>
                     <TabContent
                       className="tab-subcategories"
@@ -233,6 +223,16 @@ let full_name;
 
                           </tbody>
                         </Table>
+                        
+                        <Button
+                          className="btn-simple  btn-round float-right"
+                          color="primary"
+                          type="submit"
+                          href="http://localhost:8000/api/payment/" target="_blank"
+                        >
+                          Pay Now
+                        </Button>
+                       
                       </TabPane>
                       <TabPane tabId="tab2">
                         <Row>
@@ -265,26 +265,7 @@ let full_name;
                           <i className="tim-icons icon-send" />
                         </Button>
                       </TabPane>
-                      <TabPane tabId="tab3">
-                        <Table className="tablesorter" responsive>
-                          <thead className="text-primary">
-                            <tr>
-                              <th className="header">Latest Crypto News</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>The Daily: Nexo to Pay on Stable...</td>
-                            </tr>
-                            <tr>
-                              <td>Venezuela Begins Public of Nation...</td>
-                            </tr>
-                            <tr>
-                              <td>PR: BitCanna – Dutch Blockchain...</td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </TabPane>
+
                     </TabContent>
                   </CardBody>
                 </Card>
@@ -292,9 +273,7 @@ let full_name;
             </Row>
           </Container>
         </div>
-        <section className="section">
 
-        </section>
 
         <Footer />
       </div>

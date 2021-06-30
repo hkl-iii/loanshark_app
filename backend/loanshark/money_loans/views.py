@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework import generics, status, views, permissions
 from rest_framework import viewsets
 from .models import *
@@ -98,5 +98,4 @@ def paymentPage(request):
             return HttpResponse('Nothing to pay')
 
     else:
-        return HttpResponse('Nothing to pay')
-
+        return redirect('http://localhost:3000/profile-page')
