@@ -9,6 +9,8 @@ import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import LoginPage from "views/examples/LoginPage.js";
+
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -29,6 +31,7 @@ ReactDOM.render(
         path="/login-page"
         render={(props) => <LoginPage {...props} />}
       />
+
       <Redirect from="/" to="/landing-page" />
     </Switch>
   </BrowserRouter>,

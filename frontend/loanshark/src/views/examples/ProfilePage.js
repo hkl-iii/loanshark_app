@@ -110,14 +110,10 @@ let full_name;
           });
       }
 
-
-
-
   useEffect(() =>{
 
   });
   
-
   return (
 <div>
       <ToastContainer />
@@ -151,7 +147,7 @@ let full_name;
                         <Col md="12">
                           <FormGroup>
                             <label style={{color:'white'}}><strong>Min Amount to request : 100$<br></br>Max Amount to request:1000$</strong></label>
-                            <Input placeholder="Loand amount" type="number"  name="amount"id="amount"className="mt-3" />
+                            <Input placeholder="Loand amount" type="number"  name="amount"id="amount"className="mt-3" required  />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -160,7 +156,8 @@ let full_name;
                         color="primary"
                         data-placement="right"
                         id="tooltip341148792"
-                        type="button"
+                        type="submit"
+                       
                         onClick={() => onSubmit()}
                       >
                         Send Request

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row mt-5">
+        <form action="" method="POST" id="payment-form" >
+          {% csrf_token %}
+          <p>requested amount : {{loan.amount|floatformat}} </p>
+
+          <p>Total amount to pay:{{loan.total_amount_to_pay|floatformat}} </p>
+
+          <p>Remaining amount to pay: {{loan.remaining_amount_to_pay|floatformat}}</p>
+
+          <p>Amount to pay Now : {{amount_to_pay|floatformat}}</p>
+        </div>
+            <!-- Text input-->
+            <div class="form-group contact-form">
+              <div class="media-body">
+                <input id="form-email" name="email" placeholder="E-mail" class="form-control input-md" type="email" data-error="E-mail field is required" required>
+                <div class="help-block with-errors"></div>
+              </div>
+          </div>
+            <!-- Text input-->
+          <div class="form-group contact-form">
+            <div class="media-body">
+              <input id="form-name" name="nickname" placeholder="Enter your Full name"  class="form-control input-md" type="text" data-error="Username field is required" required>
+              <div class="help-block with-errors"></div>
+            </div>
+        </div>
+  
+          <div class="form-group mt-3">
+            <label for="card-element">
+              Credit or debit card information
+            </label>
+            <div id="card-element">
+              <!-- A Stripe Element will be inserted here. -->
+            </div>
+            <!-- Used to display form errors. -->
+            <div id="card-errors" role="alert"></div>
+          </div>
+        <div class="text-center">
+          <button type="submit"class="btn btn-outline-primary text-center">Submit Payment </button>
+        </div>
+        </form>
+      </div>
+    </div>
+   
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Create a Stripe client.
+        var stripe = Stripe('pk_test_DWe4aro8v8aGiCTFqAqaEfFa00tLguyGlK');
+        // Create an instance of Elements.
+        var elements = stripe.elements();
+        // Custom styling can be passed to options when creating an Element.
+        // (Note that this demo uses a wider set of styles than the guide below.)
+        var style = {
+          base: {
+            color: '#32325d',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+              color: '#aab7c4'
+            }
+          },
+          invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+          }
+        };
+        // Create an instance of the card Element.
+        var card = elements.create('card', {style: style});
+        
+        // Add an instance of the card Element into the `card-element` <div>.
+        card.mount('#card-element');
+        
+        // Handle real-time validation errors from the card Element.
+        card.addEventListener('change', function(event) {
+          var displayError = document.getElementById('card-errors');
+          if (event.error) {
+            displayError.textContent = event.error.message;
+          } else {
+            displayError.textContent = '';
+          }
+        });
+        // Handle form submission.
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+        stripe.createSource(card, {
+         owner : {  name :document.getElementsByName("nickname")[0].value,
+         email : document.getElementsByName("email")[0].value,
+         }
+        }).then(function(result) {
+            if (result.error) {
+              // Inform the user if there was an error
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = result.error.message;
+            } else {
+              // Send the source to your server
+              stripeTokenHandler(result.source.id);
+            }
+          });
+        });
+        // Submit the form with the token ID.
+        function stripeTokenHandler(token) {
+          // Insert the token ID into the form so it gets submitted to the server
+          var form = document.getElementById('payment-form');
+        
+        var sourceId = document.createElement('input');
+          sourceId.setAttribute('type', 'hidden');
+          sourceId.setAttribute('name', 'sourceId');
+          sourceId.setAttribute('value',token);
+          form.appendChild(sourceId); 
+          form.submit();
+          // Submit the form
+        }
+        </script>
+</body>
+</html>
