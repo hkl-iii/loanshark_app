@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.a3fb692c.chunk.css",
-    "main.js": "/static/js/main.1c8e8b02.chunk.js",
-    "main.js.map": "/static/js/main.1c8e8b02.chunk.js.map",
+    "main.js": "/static/js/main.887f558f.chunk.js",
+    "main.js.map": "/static/js/main.887f558f.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.cc85cbe0.js",
     "runtime-main.js.map": "/static/js/runtime-main.cc85cbe0.js.map",
     "static/css/2.97503911.chunk.css": "/static/css/2.97503911.chunk.css",
@@ -12,7 +12,7 @@
     "static/css/2.97503911.chunk.css.map": "/static/css/2.97503911.chunk.css.map",
     "static/css/main.a3fb692c.chunk.css.map": "/static/css/main.a3fb692c.chunk.css.map",
     "static/js/2.8dc713ed.chunk.js.LICENSE.txt": "/static/js/2.8dc713ed.chunk.js.LICENSE.txt",
-    "static/js/main.1c8e8b02.chunk.js.LICENSE.txt": "/static/js/main.1c8e8b02.chunk.js.LICENSE.txt",
+    "static/js/main.887f558f.chunk.js.LICENSE.txt": "/static/js/main.887f558f.chunk.js.LICENSE.txt",
     "static/media/blob.png": "/static/media/blob.e3950678.png",
     "static/media/cercuri.png": "/static/media/cercuri.05cc0d04.png",
     "static/media/chester-wade.jpg": "/static/media/chester-wade.e891184f.jpg",
@@ -45,6 +45,6 @@
     "static/css/2.97503911.chunk.css",
     "static/js/2.8dc713ed.chunk.js",
     "static/css/main.a3fb692c.chunk.css",
-    "static/js/main.1c8e8b02.chunk.js"
+    "static/js/main.887f558f.chunk.js"
   ]
 }

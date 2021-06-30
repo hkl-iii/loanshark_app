@@ -95,7 +95,7 @@ def paymentPage(request):
             return render(request, 'payment.html',context)
         elif payback_period == 0:
             Loans.objects.filter(user=request.user,is_done=False).update(is_done=True)
-            return HttpResponse('Nothing to pay')
+            return redirect('http://localhost:8000/')
 
     else:
-        return redirect('http://localhost:3000/profile-page')
+        return redirect('http://localhost:8000/')
