@@ -26,7 +26,7 @@ class Loans(models.Model):
 
     def calculate_total_amount(self):
         amount = int(self.amount)
-        total = (amount * 30) / 100
+        total = int((amount * 30) / 100)
         return total
 
     class Meta:

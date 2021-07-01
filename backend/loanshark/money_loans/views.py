@@ -11,6 +11,7 @@ from django.conf import settings
 import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 from django.http import HttpResponse
+from django.contrib import messages
 
 # Create your views here.
 
@@ -90,9 +91,10 @@ def paymentPage(request):
                     print('transaction',transaction)
                     
                     Loans.objects.filter(user=request.user,is_done=False).update(remaining_amount_to_pay=int(transaction), payBack_periode=str(payback_period-1))
-
+                    messages.info(request, 'Payment has been done succesfully!')
                 
             return render(request, 'payment.html',context)
+
         elif payback_period == 0:
             Loans.objects.filter(user=request.user,is_done=False).update(is_done=True)
             return redirect('http://localhost:8000/')

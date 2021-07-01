@@ -158,8 +158,7 @@ let full_name;
                         color="primary"
                         data-placement="right"
                         id="tooltip341148792"
-                        type="submit"
-                       
+                        type="button"
                         onClick={() => onSubmit()}
                       >
                         Send Request
