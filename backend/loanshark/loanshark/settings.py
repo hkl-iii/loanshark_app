@@ -167,11 +167,17 @@ WSGI_APPLICATION = 'loanshark.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'loanshark_db',
+        'USER': 'root',
+        'PASSWORD': 'devcodecampstudent',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'autocommit': True
+        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -227,5 +233,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_DWe4aro8v8aGiCTFqAqaEfFa00tLguyGlK'
-STRIPE_SECRET_KEY = 'sk_test_G0NYlXCKgP57AT3xgOKtNFR900mUb4SIOM'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51J8IabA9Ohf1PYgcLDwMqmU7nWwDEAgHTLNkHvwzLXw0V1BmmN4Kzo0xsH5U65eEbS8u2c2CHbpyGVXQbj2bhFsz00HF5YRFUF'
+STRIPE_SECRET_KEY = 'sk_test_51J8IabA9Ohf1PYgcwkDxouMOSSMUun4mzEZIp9XXt7BTIcfQ6X29SiwM5I0LAkHEUiFeexbOE0M1ZsfbisbayNrQ00lsEzQGsD'

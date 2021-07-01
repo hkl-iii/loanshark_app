@@ -45,7 +45,6 @@ class User(AbstractBaseUser,PermissionsMixin):
     password = models.CharField(max_length=400)
     full_name = models.CharField(max_length=100, blank=True, null=True)
     phone_number = models.CharField(max_length=30, blank=True, null=True)
-    address = models.CharField(max_length=250, blank=True, null=True)
     is_staff = models.BooleanField(default=False)
     proof = models.FileField(upload_to='images/',null=True, blank=True)
     is_verified = models.BooleanField(default=False)
@@ -56,7 +55,8 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     def __str__(self):
         return self.email
-
+        
+    #generating jwt token 
     def get_jwt_token_for_user(self):
         """ get jwt token for the user """
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER

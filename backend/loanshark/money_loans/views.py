@@ -15,8 +15,6 @@ from django.contrib import messages
 
 # Create your views here.
 
-
-
 class LoansAPIView(generics.GenericAPIView):
     serializer_class = LoansSerializer
     permission_classes = (
@@ -71,6 +69,7 @@ def paymentPage(request):
             if request.method == 'POST':
                 if payback_period != 0:
                     amount = int(loan.total_amount_to_pay) / 3
+                    print('testinggggggg')
                     card = stripe.Source.retrieve(request.POST['sourceId'])
                     print('card',card)
                     customer = stripe.Customer.create(
@@ -83,7 +82,7 @@ def paymentPage(request):
                         customer = customer,
                         amount = int(amount)*100 ,
                         currency = 'USD',
-                        description="Loan Pyament Back"
+                        description="Loan Payment Back"
                     )
                     
                     transaction = remaining - int(amount_to_pay)
