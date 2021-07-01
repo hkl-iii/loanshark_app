@@ -199,22 +199,6 @@ export default function LandingPage() {
                 </Col>
                 <Col md="6">
                   <div className="pl-md-5">
-                    <h1>
-                      Large <br />
-                      Achivements
-                    </h1>
-                    <p>
-                      I should be capable of drawing a single stroke at the
-                      present moment; and yet I feel that I never was a greater
-                      artist than now.
-                    </p>
-                    <br />
-                    <p>
-                      When, while the lovely valley teems with vapour around me,
-                      and the meridian sun strikes the upper surface of the
-                      impenetrable foliage of my trees, and but a few stray.
-                    </p>
-                    <br />
 
                   </div>
                 </Col>
@@ -334,8 +318,7 @@ export default function LandingPage() {
                   <h3>Awesome features</h3>
                   <p>
                     The design system comes with three pre-built pages to help
-                    you get started faster. You can change the text and images
-                    and you're good to go.
+                    you get started faster. 
                   </p>
                   <ul className="list-unstyled mt-5">
                     <li className="py-2">
@@ -344,7 +327,7 @@ export default function LandingPage() {
                           <i className="tim-icons icon-vector" />
                         </div>
                         <div className="ml-3">
-                          <h6>Carefully crafted components</h6>
+                          <h6>Quick updates</h6>
                         </div>
                       </div>
                     </li>
@@ -354,7 +337,7 @@ export default function LandingPage() {
                           <i className="tim-icons icon-tap-02" />
                         </div>
                         <div className="ml-3">
-                          <h6>Amazing page examples</h6>
+                          <h6>Easy to use</h6>
                         </div>
                       </div>
                     </li>

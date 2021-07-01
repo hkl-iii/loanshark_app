@@ -165,16 +165,6 @@ class RegisterPage extends Component {
                         
 
 
-
-
-
-
-
-
-
-
-
-
                         <InputGroup
                           className={classnames({
                           })}
@@ -209,15 +199,6 @@ class RegisterPage extends Component {
 
                           />
                         </InputGroup>
-
-
-
-
-
-
-
-
-
 
                         <InputGroup
                           className={classnames({
