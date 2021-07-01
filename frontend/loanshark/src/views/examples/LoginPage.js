@@ -50,7 +50,17 @@ class LoginPage extends Component {
       localStorage.setItem("full_name", return_data.tokens.full_name)
       localStorage.setItem("phone_number", return_data.tokens.phone_number)
       localStorage.setItem("address", return_data.tokens.address)
-      toast.success("welcome back")
+      toast.success("welcome back");
+
+
+
+      // console.log('email',email)
+      // console.log('id',localStorage.getItem('id'))
+      // console.log('token',localStorage.getItem('token'))
+      // console.log(localStorage.getItem('full_name'))
+      // console.log(localStorage.getItem('phone_number'))
+      // console.log(localStorage.getItem('address'))
+      // console.log('return_data',return_data)
 
      
       this.props.history.push('/profile-page')
@@ -58,7 +68,7 @@ class LoginPage extends Component {
 
     })
     .catch((error) => {
-          toast.error("Email or password are incorrect");
+          toast.error("Username and/or password are incorrect");
     });
 
 };
