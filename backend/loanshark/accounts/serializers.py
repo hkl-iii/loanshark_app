@@ -56,14 +56,12 @@ class LoginSerializer(serializers.ModelSerializer):
         user_id = user.id
         full_name = user.full_name
         phone_number = user.phone_number
-        address = user.address
 
         return {
             'token': user.get_jwt_token_for_user(),
             'id':user_id,
             'full_name':full_name,
             'phone_number':phone_number,
-            'address':address
             
         }
 

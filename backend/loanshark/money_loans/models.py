@@ -16,7 +16,7 @@ class Loans(models.Model):
     amount = models.CharField(max_length=30, blank=True, null=True)
     total_amount_to_pay = models.CharField(max_length=30, blank=True, null=True)
     remaining_amount_to_pay = models.CharField(max_length=30, blank=True, null=True)
-    payBack_periode= models.CharField(max_length=50,choices=payback,default=default_type,blank=True, null=True)
+    payBack_periode = models.CharField(max_length=50,choices=payback,default=default_type,blank=True, null=True)
     is_verified = models.BooleanField(default=True)
     is_done = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
